@@ -1,8 +1,10 @@
+import sys
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from .models import User
+import pymysql.cursors
 
 auth = Blueprint('auth', __name__)
 
@@ -63,3 +65,25 @@ def signup_post():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
+
+
+@auth.route('/test')
+def test():
+    print('ok', file=sys.stderr)
+
+    print('ok', file=sys.stderr)
+
+    conn = pymysql.connect(user='access', passwd='password', host='db', database='test')
+    print('ok', file=sys.stderr)
+
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    print('ok', file=sys.stderr)
+
+    cursor.execute('SELECT * FROM user')
+    print('ok', file=sys.stderr)
+
+    rows = cursor.fetchall()
+    print(rows, file=sys.stderr)
+    print('ok', file=sys.stderr)
+
+    return 'test'

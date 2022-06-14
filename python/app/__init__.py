@@ -20,7 +20,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        from app.models import User
+        from .models import User
         return User.query.get(int(user_id))
 
     # blueprint for auth routes in our app
