@@ -73,13 +73,13 @@ def test():
 
     print('ok', file=sys.stderr)
 
-    conn = pymysql.connect(user='flask', passwd='flask', host='db', database='mysql')
+    conn = pymysql.connect(user='flask', passwd='flask', host='db', database='store')
     print('ok', file=sys.stderr)
 
     cursor = conn.cursor(pymysql.cursors.DictCursor)
     print('ok', file=sys.stderr)
 
-    cursor.execute('SELECT * FROM user')
+    cursor.execute('SELECT * FROM Items')
     print('ok', file=sys.stderr)
 
     rows = cursor.fetchall()
