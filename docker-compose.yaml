@@ -16,4 +16,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - ./db:/docker-entrypoint-initdb.d/:ro
+      - ./db:/docker-entrypoint-initdb.d/
+      - ./dbscripts:/dbscripts
+    command: mysqld --default-authentication-plugin=mysql_native_password --init-file=/dbscripts/init.sql

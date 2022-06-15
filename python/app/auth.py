@@ -73,7 +73,7 @@ def test():
 
     print('ok', file=sys.stderr)
 
-    conn = pymysql.connect(user='access', passwd='password', host='db', database='test')
+    conn = pymysql.connect(user='flask', passwd='flask', host='db', database='mysql')
     print('ok', file=sys.stderr)
 
     cursor = conn.cursor(pymysql.cursors.DictCursor)
