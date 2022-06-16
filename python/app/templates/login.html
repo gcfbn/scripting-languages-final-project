@@ -1,37 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="column is-4 is-offset-4">
-        <h3 class="title">Login</h3>
+    <h3 class="title">Login</h3>
+        <form method="POST" action="/login">
         <div class="box">
-            <form method="POST" action="/login">
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
-                        <div class="notification is-danger">
+                        <div class="alert alert-danger">
                             {{ messages[0] }}
                         </div>
                     {% endif %}
                 {% endwith %}
 
-                <div class="field">
-                    <div class="control">
-                        <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
-                    </div>
+                <div class="form-outline mb-4">
+                    <input class="input" id="form2Example1" type="email" name="email" placeholder="Your Email"
+                           autofocus="">
                 </div>
 
-                <div class="field">
-                    <div class="control">
-                        <input class="input is-large" type="password" name="password" placeholder="Your Password">
-                    </div>
+                <div class="form-outline mb-4">
+                    <input class="input" id="form2Example1" type="password" name="password"
+                           placeholder="Your Password" autofocus="">
                 </div>
-                <div class="field">
-                    <label class="checkbox">
-                        <input type="checkbox" name="remember">
-                        Remember me
-                    </label>
+
+                <div class="form-submit">
+                    <label class="checkbox col-md-2"><input type="checkbox" name="remember">Remember me</label>
+                    <button class="btn-primary col-md-1">Login</button>
                 </div>
-                <button class="button is-block is-info is-large is-fullwidth">Login</button>
-            </form>
-        </div>
-    </div>
+            </div>
+        </form>
 {% endblock %}
