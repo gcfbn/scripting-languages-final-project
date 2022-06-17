@@ -1,4 +1,4 @@
-get_user_cart_query = """SELECT Items.ItemId, Items.ItemPrice, Items.ItemName, Items.ItemUnit, Items.ItemAvailability
+get_user_cart_query = """SELECT Items.ItemId, Items.ItemPrice, Items.ItemName, Items.ItemUnit, Items.ItemAvailability, Carts.CartItemQuantity
 FROM Carts INNER JOIN Items ON Carts.ItemId=Items.ItemId
 WHERE Carts.UserId = %s;"""
 

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-primary">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div id="shopping-cart">
+        <h3 class="mb-3">Your Cart</h3>
+        {% if products %}
+            <table class="tbl-cart" cellpadding="10" cellspacing="1">
+                <tbody>
+                <tr>
+                    <th style="text-align:left;">Name</th>
+                    <th style="text-align:right;" width="5%">Quantity</th>
+                    <th style="text-align:right;" width="10%">Unit Price</th>
+                    <th style="text-align:right;" width="10%">Unit</th>
+                    <th style="text-align:right;" width="10%">Price</th>
+                    <th style="text-align:center;" width="5%">Remove</th>
+                </tr>
+                {% for product in products %}
+                    <tr>
+                        <td style="text-align:left;"><a
+                                href="{{ url_for('store.item', item_id=product['ItemId']) }}">{{ product['ItemName'] }}</a>
+                        </td>
+                        <td style="text-align:right;">
+                            <form action="{{ url_for('store.change_cart_quantity', user_id=user_id, item_id=product['ItemId']) }}" method="post">
+                                <input type="number" name="quantity" min="1"
+                                       max="{{ product['ItemAvailability'] }}"
+                                       value="{{ product['CartItemQuantity'] }}"
+                                       onkeydown="return false">
+                                <button type="submit" class="btn btn-dark" >Change</button>
+                            </form>
+                        </td>
+                        <td style="text-align:right;">{{ product['ItemPrice'] }} zł</td>
+                        <td style="text-align:right;">{{ product['ItemUnit'] }}</td>
+                        <td style="text-align:right;">{{ product['ItemPrice'] * product['CartItemQuantity'] }} zł</td>
+                        <td style="text-align:center;">
+                            <a href="{{ url_for('store.remove_from_cart', item_id=product['ItemId'], user_id=user_id) }}"
+                               class="btnRemoveAction">
+                                <img src="../static/icons8-delete-30.png" alt="Remove Item"/>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2" align="right"><strong>Total:</strong></td>
+                    <td align="right"><strong>{{ total_items }}</strong></td>
+                    <td align="right" colspan="2"><strong>{{ total_price }} zł</strong></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        {% else: %}
+            <div class="no-records">Your Cart is Empty</div>
+        {% endif %}
+    </div>
+
+{% endblock %}
