@@ -1,4 +1,5 @@
 import sys
+from enum import Enum
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -7,6 +8,11 @@ from .models import User
 import pymysql.cursors
 
 auth = Blueprint('auth', __name__)
+
+
+class UserType(Enum):
+    CUSTOMER = 'customer',
+    SELLER = 'seller'
 
 
 @auth.route('/login')
@@ -42,6 +48,7 @@ def signup_post():
     email = request.form.get('email')
     name = request.form.get('name')
     password = request.form.get('password')
+    usertype = request.form.get('usertypeRadio')
 
     user = User.query.filter_by(
         email=email).first()  # if this returns a user, then the email already exists in database
@@ -51,7 +58,7 @@ def signup_post():
         return redirect(url_for('auth.signup'))
 
     # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
+    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), usertype=usertype)
 
     # add the new user to the database
     db.session.add(new_user)
