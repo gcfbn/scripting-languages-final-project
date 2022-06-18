@@ -30,19 +30,25 @@
                                 href="{{ url_for('store.item', item_id=product['ItemId']) }}">{{ product['ItemName'] }}</a>
                         </td>
                         <td style="text-align:right;">
-                            <form action="{{ url_for('store.change_cart_quantity', user_id=user_id, item_id=product['ItemId']) }}" method="post">
-                                <input type="number" name="quantity" min="1"
-                                       max="{{ product['ItemAvailability'] }}"
-                                       value="{{ product['CartItemQuantity'] }}"
-                                       onkeydown="return false">
-                                <button type="submit" class="btn btn-dark" >Change</button>
+                            <form action="{{ url_for('store.change_cart_quantity', item_id=product['ItemId']) }}"
+                                  method="post">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="number" name="quantity" min="1"
+                                               max="{{ product['ItemAvailability'] }}"
+                                               value="{{ product['CartItemQuantity'] }}"
+                                               onkeydown="return false"></div>
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-dark col">Change</button>
+                                    </div>
+                                </div>
                             </form>
                         </td>
                         <td style="text-align:right;">{{ product['ItemPrice'] }} zł</td>
                         <td style="text-align:right;">{{ product['ItemUnit'] }}</td>
                         <td style="text-align:right;">{{ product['ItemPrice'] * product['CartItemQuantity'] }} zł</td>
                         <td style="text-align:center;">
-                            <a href="{{ url_for('store.remove_from_cart', item_id=product['ItemId'], user_id=user_id) }}"
+                            <a href="{{ url_for('store.remove_from_cart', item_id=product['ItemId']) }}"
                                class="btnRemoveAction">
                                 <img src="../static/icons8-delete-30.png" alt="Remove Item"/>
                             </a>
@@ -57,6 +63,9 @@
                 </tr>
                 </tbody>
             </table>
+            <div class="text-right mb-2">
+                <a href="{{ url_for('store.buy') }}" class="btn btn-primary mr-3" role="button"><strong>Buy</strong></a>
+            </div>
         {% else: %}
             <div class="no-records">Your Cart is Empty</div>
         {% endif %}
