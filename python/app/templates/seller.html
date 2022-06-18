@@ -21,9 +21,9 @@
                 <tbody>
                 <tr>
                     <th style="text-align:left;">Name</th>
-                    <th style="text-align:left;" width="40%">Description</th>
-                    <th style="text-align:right;" width="10%">Unit Price</th>
+                    <th style="text-align:left;" width="35%">Description</th>
                     <th style="text-align:right;" width="10%">Unit</th>
+                    <th style="text-align:right;" width="10%">Unit Price</th>
                     <th style="text-align:right;" width="5%">Availability</th>
                 </tr>
                 {% for product in products %}
@@ -32,6 +32,7 @@
                                 href="{{ url_for('store.item', item_id=product['ItemId']) }}">{{ product['ItemName'] }}</a>
                         </td>
                         <td style="text-align:left;">{{ product['ItemDescr'] }}</td>
+                        <td style="text-align:right;">{{ product['ItemUnit'] }}</td>
                         <td style="text-align:right;">
                             <form action="{{ url_for('store.change_price', item_id=product['ItemId']) }}"
                                   method="post">
@@ -46,7 +47,6 @@
                                 </div>
                             </form>
                         </td>
-                        <td style="text-align:right;">{{ product['ItemUnit'] }}</td>
                         <td style="text-align:right;">
                             <form action="{{ url_for('store.change_availability', item_id=product['ItemId']) }}"
                                   method="post">
