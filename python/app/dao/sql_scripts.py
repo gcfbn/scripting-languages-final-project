@@ -47,4 +47,4 @@ update_item_price_query = """UPDATE Items
 SET ItemPrice = %s
 WHERE ItemId = %s;"""
 
-get_last_item_id_query = """SELECT LAST_INSERT_ID();"""
+get_last_item_id_query = """SELECT LAST_INSERT_ID() FROM Purchases;"""

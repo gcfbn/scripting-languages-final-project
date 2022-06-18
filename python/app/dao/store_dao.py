@@ -70,7 +70,7 @@ def create_purchase(user_id):
     cursor.execute(create_purchase_query, (user_id,))
     conn.commit()
     cursor.execute(get_last_item_id_query)
-    return cursor.fetchone()
+    return cursor.fetchone()['LAST_INSERT_ID()']
 
 
 def add_item_to_purchase(purchase_id, item_id, quantity):
