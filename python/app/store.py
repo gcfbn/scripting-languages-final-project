@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 from .dao.store_dao import get_user_cart, remove_from_cart as dao_remove_from_cart, change_quantity_in_cart, \
     create_purchase, add_item_to_purchase, set_current_availability, get_single_item, add_to_cart as dao_add_to_cart, \
-    already_in_cart
+    already_in_cart, get_items
 
 store = Blueprint('store', __name__)
 
@@ -18,7 +18,15 @@ def cart():
 
 @store.route('/items')
 def items():
-    return 'items'
+    items = get_items()
+    return render_template('items.html', products=items)
+
+
+@store.route('/items', methods=['POST'])
+def items_post():
+    query = request.form['search_bar']
+    items = get_items(query)
+    return render_template('items.html', products=items)
 
 
 @store.route('/item')

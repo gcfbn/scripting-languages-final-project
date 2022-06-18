@@ -13,7 +13,7 @@ WHERE P.PurchaseId = %s;"""
 
 get_items_query = """SELECT ItemId, ItemName, ItemDescr, ItemPrice, ItemAvailability, ItemUnit
 FROM Items
-WHERE Items.ItemName LIKE \'%%s%\';"""
+WHERE Items.ItemName LIKE CONCAT('%%', %s, '%%');"""
 
 add_product_query = """INSERT INTO Items(ItemPrice, ItemName, ItemDescr, ItemAvailability, ItemUnit, SellerId)
     VALUE (%s, %s, %s, %s, %s, %s);"""

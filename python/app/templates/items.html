@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="item-list">
+        <h3 class="mb-3">Products</h3>
+        {% if products %}
+            <table class="tbl-list" cellpadding="10" cellspacing="1">
+                <tbody>
+                <tr>
+                    <th style="text-align:left;">Name</th>
+                    <th style="text-align:left;" width="40%">Description</th>
+                    <th style="text-align:right;" width="10%">Unit Price</th>
+                    <th style="text-align:right;" width="10%">Unit</th>
+                    <th style="text-align:right;" width="5%">Availability</th>
+                </tr>
+                {% for product in products %}
+                    <tr>
+                        <td style="text-align:left;"><a
+                                href="{{ url_for('store.item', item_id=product['ItemId']) }}">{{ product['ItemName'] }}</a>
+                        </td>
+                        <td style="text-align:left;">{{ product['ItemDescription'] }}</td>
+                        <td style="text-align:right;">{{ product['ItemPrice'] }} zł</td>
+                        <td style="text-align:right;">{{ product['ItemUnit'] }}</td>
+                        <td style="text-align:right;">{{ product['ItemAvailability'] }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else: %}
+            <h4 class="mb-4">Can't find any products</h4>
+        {% endif %}
+    </div>
+{% endblock %}

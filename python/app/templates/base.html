@@ -16,11 +16,11 @@
         <div class="navbar-nav ms-auto">
             <a href="{{ url_for('main.index') }}" class="navbar-brand">WebStore</a>
             <a href="{{ url_for('store.items') }}" class="nav-item nav-link active">Products</a>
-            <form class="form-inline">
+            <form class="form-inline" method="post" action="{{ url_for('store.items') }}">
                 <div class="row">
                     <div class="col-sm-7">
                         <input class="form-control mr-sm-2" type="search" placeholder="Enter product name"
-                               aria-label="Search">
+                               aria-label="Search" name="search_bar">
                     </div>
                     <div class="col-sm-1">
                         <button class="btn-success" type="submit">Search</button>
