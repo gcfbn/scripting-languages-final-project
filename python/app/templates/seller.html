@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-primary">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="text-right mt-3">
+        <a href="{{ url_for('store.add_item') }}"
+           class="btn btn-success  mr-3" role="button">Add product</a>
+    </div>
+    <div id="item-list">
+        <h3 class="mb-3">Products</h3>
+        {% if products %}
+            <table class="tbl-list" cellpadding="10" cellspacing="1">
+                <tbody>
+                <tr>
+                    <th style="text-align:left;">Name</th>
+                    <th style="text-align:left;" width="40%">Description</th>
+                    <th style="text-align:right;" width="10%">Unit Price</th>
+                    <th style="text-align:right;" width="10%">Unit</th>
+                    <th style="text-align:right;" width="5%">Availability</th>
+                </tr>
+                {% for product in products %}
+                    <tr>
+                        <td style="text-align:left;"><a
+                                href="{{ url_for('store.item', item_id=product['ItemId']) }}">{{ product['ItemName'] }}</a>
+                        </td>
+                        <td style="text-align:left;">{{ product['ItemDescription'] }}</td>
+                        <td style="text-align:right;">
+                            <form action="{{ url_for('store.change_price', item_id=product['ItemId']) }}"
+                                  method="post">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="number" name="new_price" min="0.0" step="0.01"
+                                               value="{{ product['ItemPrice'] }}">
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-dark col">Change price</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                        <td style="text-align:right;">{{ product['ItemUnit'] }}</td>
+                        <td style="text-align:right;">
+                            <form action="{{ url_for('store.change_availability', item_id=product['ItemId']) }}"
+                                  method="post">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="number" name="new_availability" min="0"
+                                               value="{{ product['ItemAvailability'] }}"
+                                               onkeydown="return false"></div>
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-dark col">Change availability</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else: %}
+            <h4 class="mb-4">Can't find any products</h4>
+        {% endif %}
+    </div>
+{% endblock %}

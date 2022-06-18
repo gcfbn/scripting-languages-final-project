@@ -41,7 +41,8 @@ WHERE ItemId = %s;"""
 get_items_sold_by_query = """SELECT I.ItemId, I.ItemName, I.ItemPrice, I.ItemUnit, I.ItemAvailability,
 SUM(PI.PurchasedItemsQuantity) AS NumberOfSoldItems 
 FROM Items I LEFT JOIN Purchased_Items PI on I.ItemId = PI.ItemId
-WHERE I.SellerId = %s;"""
+WHERE I.SellerId = %s
+GROUP BY I.ItemId, I.ItemName, I.ItemPrice, I.ItemUnit, I.ItemAvailability;"""
 
 update_item_price_query = """UPDATE Items
 SET ItemPrice = %s

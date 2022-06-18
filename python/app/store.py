@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 from .dao.store_dao import get_user_cart, remove_from_cart as dao_remove_from_cart, change_quantity_in_cart, \
     create_purchase, add_item_to_purchase, set_current_availability, get_single_item, add_to_cart as dao_add_to_cart, \
-    already_in_cart, get_items
+    already_in_cart, get_items, get_items_sold_by, update_item_price
 
 store = Blueprint('store', __name__)
 
@@ -39,7 +39,9 @@ def item():
 
 @store.route('/sold_items')
 def sold_items():
-    return 'sold_items'
+    user_id = flask_login.current_user.id
+    products = get_items_sold_by(user_id)
+    return render_template('seller.html', products=products)
 
 
 @store.route('/remove_from_cart')
@@ -90,3 +92,26 @@ def add_to_cart():
     dao_add_to_cart(user_id, item_id, quantity)
     flash('Item added to cart.')
     return redirect(url_for('store.item', item_id=item_id))
+
+
+@store.route('/change_price', methods=['POST'])
+def change_price():
+    item_id = request.args.get('item_id')
+    new_price = request.form['new_price']
+    update_item_price(new_price, item_id)
+    flash('Price updated.')
+    return redirect(url_for('store.sold_items'))
+
+
+@store.route('/change_availability', methods=['POST'])
+def change_availability():
+    item_id = request.args.get('item_id')
+    new_availability = request.form['new_availability']
+    set_current_availability(new_availability, item_id)
+    flash('Availability updated.')
+    return redirect(url_for('store.sold_items'))
+
+
+@store.route('/add_item')
+def add_item():
+    return render_template('add_item.html')
