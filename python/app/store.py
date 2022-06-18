@@ -50,4 +50,12 @@ def change_cart_quantity():
 
 @store.route('/buy')
 def buy():
-    return 'buy items from cart'
+    user_id = flask_login.current_user.id
+    cart_items = get_user_cart(user_id)
+    total_price = sum(i['ItemPrice'] * i['CartItemQuantity'] for i in cart_items)
+    return render_template('buy.html', total_items=len(cart_items), total_price=total_price, products=cart_items)
+
+
+@store.route('/confirm_purchase')
+def confirm_purchase():
+    return 'purchase confirmed'
