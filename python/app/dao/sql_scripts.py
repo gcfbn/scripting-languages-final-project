@@ -48,3 +48,7 @@ SET ItemPrice = %s
 WHERE ItemId = %s;"""
 
 get_last_item_id_query = """SELECT LAST_INSERT_ID() FROM Purchases;"""
+
+get_single_item_query = """SELECT * FROM Items I WHERE I.ItemId = %s;"""
+
+already_in_cart_query = """SELECT * FROM Carts C WHERE C.ItemId = %s AND C.UserId = %s;"""

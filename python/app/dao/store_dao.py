@@ -48,8 +48,8 @@ def add_product(item_price, item_name, item_descr, item_availability, item_unit,
     return cursor.fetchall()
 
 
-def add_to_cart(user_id, item_id):
-    cursor.execute(add_to_cart_query, (user_id, item_id))
+def add_to_cart(user_id, item_id, quantity):
+    cursor.execute(add_to_cart_query, (user_id, item_id, quantity))
     conn.commit()
     return cursor.fetchall()
 
@@ -94,3 +94,14 @@ def update_item_price(new_price, item_id):
     cursor.execute(update_item_price_query, (new_price, item_id))
     conn.commit()
     return cursor.fetchall()
+
+
+def get_single_item(item_id):
+    cursor.execute(get_single_item_query, (item_id,))
+    return cursor.fetchone()
+
+
+def already_in_cart(item_id, user_id):
+    cursor.execute(already_in_cart_query, (item_id, user_id))
+    result = cursor.fetchone()
+    return not (result is None)

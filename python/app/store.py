@@ -2,7 +2,8 @@ import flask_login
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 from .dao.store_dao import get_user_cart, remove_from_cart as dao_remove_from_cart, change_quantity_in_cart, \
-    create_purchase, add_item_to_purchase, set_current_availability
+    create_purchase, add_item_to_purchase, set_current_availability, get_single_item, add_to_cart as dao_add_to_cart, \
+    already_in_cart
 
 store = Blueprint('store', __name__)
 
@@ -22,7 +23,10 @@ def items():
 
 @store.route('/item')
 def item():
-    return request.args.get('item_id')
+    item_id = request.args.get('item_id')
+    product = get_single_item(item_id)
+    user_id = flask_login.current_user.id
+    return render_template('item.html', product=product, already_in_cart=already_in_cart(item_id, user_id))
 
 
 @store.route('/sold_items')
@@ -68,3 +72,13 @@ def confirm_purchase():
         dao_remove_from_cart(user_id, i['ItemId'])
     flash('Purchase confirmed!')
     return redirect(url_for('store.cart'))
+
+
+@store.route('/add_to_cart', methods=['POST'])
+def add_to_cart():
+    user_id = flask_login.current_user.id
+    item_id = request.args.get('item_id')
+    quantity = request.form['quantity']
+    dao_add_to_cart(user_id, item_id, quantity)
+    flash('Item added to cart.')
+    return redirect(url_for('store.item', item_id=item_id))

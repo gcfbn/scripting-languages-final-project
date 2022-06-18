@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-primary">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="single-product">
+        <div class="row mt-2">
+            <div class="col-4 font-weight-bold mr-3">{{ product['ItemName'] }}</div>
+            <div class="col-1 text-right mr-3">Price</div>
+            <div class="col-1 text-right mr-3">Unit</div>
+            <div class="col-1 text-right mr-3">Available</div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-4"></div>
+            <div class="col-1 text-right mr-3">{{ product['ItemPrice'] }} zł</div>
+            <div class="col-1 text-right mr-3">{{ product['ItemUnit'] }}</div>
+            <div class="col-1 text-right mr-3">{{ product['ItemAvailability'] }}</div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-4 ml-3">{{ product['ItemDescr'] }}</div>
+        </div>
+        <div class="text-right mr-3">
+            {% if already_in_cart %}
+                <button type="button" class="btn btn-outline-success" disabled>Already in cart</button>
+            {% else: %}
+                <form action="{{ url_for('store.add_to_cart', item_id=product['ItemId']) }}"
+                      method="post">
+                    <div class="row">
+                        <div class="col">
+                            <input type="number" name="quantity" min="1"
+                                   max="{{ product['ItemAvailability'] }}"
+                                   value="1"
+                                   onkeydown="return false"></div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-success col">Add to cart</button>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
