@@ -73,8 +73,8 @@ def create_purchase(user_id):
     return cursor.fetchone()['LAST_INSERT_ID()']
 
 
-def add_item_to_purchase(purchase_id, item_id, quantity):
-    cursor.execute(add_item_to_purchase_query, (purchase_id, item_id, quantity))
+def add_item_to_purchase(purchase_id, item_id, quantity, price):
+    cursor.execute(add_item_to_purchase_query, (purchase_id, item_id, quantity, price))
     conn.commit()
     return cursor.fetchall()
 
@@ -105,3 +105,9 @@ def already_in_cart(item_id, user_id):
     cursor.execute(already_in_cart_query, (item_id, user_id))
     result = cursor.fetchone()
     return not (result is None)
+
+
+def delete_item(item_id):
+    cursor.execute(delete_item_query, (item_id,))
+    conn.commit()
+    return cursor.fetchall()

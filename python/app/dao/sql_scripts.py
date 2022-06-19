@@ -1,6 +1,6 @@
 get_user_cart_query = """SELECT Items.ItemId, Items.ItemPrice, Items.ItemName, Items.ItemUnit, Items.ItemAvailability, Carts.CartItemQuantity
 FROM Carts INNER JOIN Items ON Carts.ItemId=Items.ItemId
-WHERE Carts.UserId = %s;"""
+WHERE Carts.UserId = %s AND (Items.IsDeleted IS NULL OR Items.IsDeleted = FALSE);"""
 
 get_user_purchases_query = """SELECT PurchaseId, PurchaseDate 
 FROM Purchases
@@ -13,7 +13,7 @@ WHERE P.PurchaseId = %s;"""
 
 get_items_query = """SELECT ItemId, ItemName, ItemDescr, ItemPrice, ItemAvailability, ItemUnit
 FROM Items
-WHERE Items.ItemName LIKE CONCAT('%%', %s, '%%');"""
+WHERE Items.ItemName LIKE CONCAT('%%', %s, '%%') AND (Items.IsDeleted IS NULL OR Items.IsDeleted = FALSE);"""
 
 add_product_query = """INSERT INTO Items(ItemPrice, ItemName, ItemDescr, ItemAvailability, ItemUnit, SellerId)
     VALUE (%s, %s, %s, %s, %s, %s);"""
@@ -31,8 +31,8 @@ WHERE ItemId = %s AND UserId = %s;"""
 create_purchase_query = """INSERT INTO Purchases(UserId, PurchaseDate)
 VALUE (%s, CURDATE());"""
 
-add_item_to_purchase_query = """INSERT INTO Purchased_Items(PurchaseId, ItemId, PurchasedItemsQuantity)
-VALUE(%s, %s, %s);"""
+add_item_to_purchase_query = """INSERT INTO Purchased_Items(PurchaseId, ItemId, PurchasedItemsQuantity, PurchasedItemPrice)
+VALUE(%s, %s, %s, %s);"""
 
 set_current_availability_query = """UPDATE Items
 SET ItemAvailability = %s
@@ -41,7 +41,7 @@ WHERE ItemId = %s;"""
 get_items_sold_by_query = """SELECT I.ItemId, I.ItemName, I.ItemPrice, I.ItemUnit, I.ItemAvailability,
 SUM(PI.PurchasedItemsQuantity) AS NumberOfSoldItems 
 FROM Items I LEFT JOIN Purchased_Items PI on I.ItemId = PI.ItemId
-WHERE I.SellerId = %s
+WHERE I.SellerId = %s AND (I.IsDeleted IS NULL OR I.IsDeleted = FALSE)
 GROUP BY I.ItemId, I.ItemName, I.ItemPrice, I.ItemUnit, I.ItemAvailability;"""
 
 update_item_price_query = """UPDATE Items
@@ -53,3 +53,7 @@ get_last_item_id_query = """SELECT LAST_INSERT_ID() FROM Purchases;"""
 get_single_item_query = """SELECT * FROM Items I WHERE I.ItemId = %s;"""
 
 already_in_cart_query = """SELECT * FROM Carts C WHERE C.ItemId = %s AND C.UserId = %s;"""
+
+delete_item_query = """UPDATE Items
+SET IsDeleted = TRUE
+WHERE ItemId = %s;"""

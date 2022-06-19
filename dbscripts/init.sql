@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS Items
     ItemAvailability int         NOT NULL,
     ItemUnit         varchar(15) NOT NULL,
     SellerId         int         NOT NULL,
+    IsDeleted        boolean,
     PRIMARY KEY (ItemId)
 );
 
@@ -39,6 +40,7 @@ CREATE TABLE IF NOT EXISTS Purchased_Items
     PurchaseId             int NOT NULL,
     ItemId                 int NOT NULL,
     PurchasedItemsQuantity int NOT NULL,
+    PurchasedItemPrice     float(9, 2) NOT NULL,
     PRIMARY KEY (PurchaseId, ItemId),
     FOREIGN KEY (PurchaseId) REFERENCES Purchases (PurchaseId),
     FOREIGN KEY (ItemId) REFERENCES Items (ItemId)

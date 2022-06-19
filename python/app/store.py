@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 from .dao.store_dao import get_user_cart, remove_from_cart as dao_remove_from_cart, change_quantity_in_cart, \
     create_purchase, add_item_to_purchase, set_current_availability, get_single_item, add_to_cart as dao_add_to_cart, \
-    already_in_cart, get_items, get_items_sold_by, update_item_price, add_product
+    already_in_cart, get_items, get_items_sold_by, update_item_price, add_product, delete_item as dao_delete_item
 
 store = Blueprint('store', __name__)
 
@@ -84,7 +84,7 @@ def confirm_purchase():
     cart_items = get_user_cart(user_id)
     purchase_id = create_purchase(user_id)
     for i in cart_items:
-        add_item_to_purchase(purchase_id, i['ItemId'], i['CartItemQuantity'])
+        add_item_to_purchase(purchase_id, i['ItemId'], i['CartItemQuantity'], i['ItemPrice'])
         set_current_availability(i['ItemAvailability'] - i['CartItemQuantity'], i['ItemId'])
         dao_remove_from_cart(user_id, i['ItemId'])
     flash('Purchase confirmed!')
@@ -142,6 +142,16 @@ def add_item_post():
     return redirect(url_for('store.sold_items'))
 
 
+@login_required
+@store.route('/delete_item')
+def delete_item():
+    item_id = request.args.get('item_id')
+    dao_delete_item(item_id)
+    flash('Product deleted.')
+    return redirect(url_for('store.sold_items'))
+
+
+@login_required
 @store.route('/profile')
 def profile():
     return render_template('profile.html')

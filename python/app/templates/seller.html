@@ -21,10 +21,12 @@
                 <tbody>
                 <tr>
                     <th style="text-align:left;">Name</th>
-                    <th style="text-align:left;" width="35%">Description</th>
+                    <th style="text-align:left;" width="25%">Description</th>
                     <th style="text-align:right;" width="10%">Unit</th>
                     <th style="text-align:right;" width="10%">Unit Price</th>
                     <th style="text-align:right;" width="5%">Availability</th>
+                    <th style="text-align:right;" width="5%">Already sold</th>
+                    <th style="text-align:right;" width="5%">Delete</th>
                 </tr>
                 {% for product in products %}
                     <tr>
@@ -61,6 +63,9 @@
                                 </div>
                             </form>
                         </td>
+                        <td style="text-align:right;">{{ product['NumberOfSoldItems'] }}</td>
+                        <td><a class="btn btn-danger"
+                               href="{{ url_for('store.delete_item', item_id=product['ItemId']) }}">Delete</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
