@@ -8,6 +8,8 @@ services:
       - db
     ports:
       - "5000:5000"
+    volumes:
+        - ./sqlite:/app/app/sqlite:rw
 
   db:
     image: mysql:8.0.21
