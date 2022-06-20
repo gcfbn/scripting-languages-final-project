@@ -4,9 +4,9 @@
     <h2 class="mt-2 ml-2">Your purchases:</h2>
     <table class="tbl-list mt-2" cellpadding="10" cellspacing="1">
         <tbody>
-        {% for date, products in groups.items() %}
+        {% for id, products in groups.items() %}
             <tr>
-                <td colspan="2" class="h3 text-left">{{ date }}</td>
+                <td colspan="2" class="h3 text-left">{{ id_to_date_map[id] }}</td>
             </tr>
             <tr>
                 <th style="text-align:left;">Product Name</th>

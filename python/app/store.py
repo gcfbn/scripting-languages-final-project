@@ -16,7 +16,7 @@ def cart():
     user_id = current_user.id
     cart_items = get_user_cart(user_id)
     total_price = sum(i['ItemPrice'] * i['CartItemQuantity'] for i in cart_items)
-    return render_template('cart.html', products=cart_items, total_items=len(cart_items), total_price=total_price)
+    return render_template('cart.html', products=cart_items, total_price=total_price)
 
 
 @store.route('/items')
@@ -76,7 +76,7 @@ def buy():
     user_id = current_user.id
     cart_items = get_user_cart(user_id)
     total_price = sum(i['ItemPrice'] * i['CartItemQuantity'] for i in cart_items)
-    return render_template('buy.html', total_items=len(cart_items), total_price=total_price, products=cart_items)
+    return render_template('buy.html', total_price=total_price, products=cart_items)
 
 
 @store.route('/confirm_purchase')
@@ -162,6 +162,8 @@ def profile():
         return render_template('seller_profile.html', products=products, name=current_user.name, total=total)
     elif current_user.usertype == 'customer':
         products = get_purchased_items(current_user.id)
-        groups = groupby(products, projection=lambda p: p['PurchaseDate'])
-        return render_template('customer_profile.html', groups=groups, name=current_user.name)
+        groups = groupby(products, projection=lambda p: p['PurchaseId'])
+        id_to_date_map = {p['PurchaseId']: p['PurchaseDate'] for p in products}
+        return render_template('customer_profile.html', groups=groups, name=current_user.name,
+                               id_to_date_map=id_to_date_map)
     return redirect(url_for('main.index'))

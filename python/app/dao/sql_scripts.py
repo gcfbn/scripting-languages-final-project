@@ -6,7 +6,7 @@ get_user_purchases_query = """SELECT PurchaseId, PurchaseDate
 FROM Purchases
 WHERE UserId = %s;"""
 
-get_purchased_items_query = """SELECT PI.ItemId, I.ItemName, PI.PurchasedItemsQuantity, I.ItemUnit, PI.PurchasedItemPrice, P.PurchaseDate
+get_purchased_items_query = """SELECT PI.ItemId, I.ItemName, PI.PurchasedItemsQuantity, I.ItemUnit, PI.PurchasedItemPrice, P.PurchaseDate, P.PurchaseId
 FROM Purchases P INNER JOIN Purchased_Items PI on P.PurchaseId = PI.PurchaseId
 INNER JOIN Items I on PI.ItemId = I.ItemId
 WHERE P.UserId = %s;"""
