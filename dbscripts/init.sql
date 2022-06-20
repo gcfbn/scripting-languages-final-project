@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Items
     ItemId           int         NOT NULL AUTO_INCREMENT,
     ItemPrice        float(9, 2) NOT NULL,
     ItemName         varchar(63) NOT NULL,
-    ItemDescr        varchar(1023),
+    ItemDescr        text,
     ItemAvailability int         NOT NULL,
     ItemUnit         varchar(15) NOT NULL,
     SellerId         int         NOT NULL,
