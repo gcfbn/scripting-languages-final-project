@@ -57,3 +57,7 @@ already_in_cart_query = """SELECT * FROM Carts C WHERE C.ItemId = %s AND C.UserI
 delete_item_query = """UPDATE Items
 SET IsDeleted = TRUE
 WHERE ItemId = %s;"""
+
+get_seller_report_query = """SELECT I.ItemId, I.ItemName, I.ItemUnit, P.PurchaseDate, PI.PurchasedItemsQuantity, PI.PurchasedItemPrice
+FROM Items I INNER JOIN Purchased_Items PI on I.ItemId = PI.ItemId INNER JOIN Purchases P ON PI.PurchaseId = P.PurchaseId
+WHERE I.SellerId = %s;"""

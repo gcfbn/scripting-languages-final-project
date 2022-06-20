@@ -1,9 +1,12 @@
+import sys
+
 from flask_login import login_required, current_user
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 from .dao.store_dao import get_user_cart, remove_from_cart as dao_remove_from_cart, change_quantity_in_cart, \
     create_purchase, add_item_to_purchase, set_current_availability, get_single_item, add_to_cart as dao_add_to_cart, \
-    already_in_cart, get_items, get_items_sold_by, update_item_price, add_product, delete_item as dao_delete_item
+    already_in_cart, get_items, get_items_sold_by, update_item_price, add_product, delete_item as dao_delete_item, \
+    get_seller_report
 
 store = Blueprint('store', __name__)
 
@@ -154,4 +157,7 @@ def delete_item():
 @login_required
 @store.route('/profile')
 def profile():
+    if current_user.usertype == 'seller':
+        products = get_seller_report(current_user.id)
+        return render_template('seller_profile.html', products=products)
     return render_template('profile.html')

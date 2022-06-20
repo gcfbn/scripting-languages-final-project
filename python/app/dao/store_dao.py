@@ -111,3 +111,8 @@ def delete_item(item_id):
     cursor.execute(delete_item_query, (item_id,))
     conn.commit()
     return cursor.fetchall()
+
+
+def get_seller_report(user_id):
+    cursor.execute(get_seller_report_query, (user_id,))
+    return cursor.fetchall()
