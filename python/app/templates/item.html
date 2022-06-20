@@ -11,41 +11,47 @@
         {% endwith %}
     </div>
     <div class="single-product">
-        <div class="row mt-2">
-            <div class="col-4 font-weight-bold mr-3">{{ product['ItemName'] }}</div>
-            <div class="col-1 text-right mr-3">Price</div>
-            <div class="col-1 text-right mr-3">Unit</div>
-            <div class="col-1 text-right mr-3">Available</div>
+        <div class="row mt-3 ml-3">
+            <div class="col-6 font-weight-bold mr-3" style="font-size: 1.5rem">{{ product['ItemName'] }}</div>
+            <div class="col-2"></div>
+            <div class="col-1 text-right mr-3">
+                <div class="row">Price</div>
+                <div class="row">{{ product['ItemPrice'] }} zł</div>
+            </div>
+            <div class="col-1 text-right mr-3">
+                <div class="row">Unit</div>
+                <div class="row">{{ product['ItemUnit'] }}</div>
+            </div>
+            <div class="col-1 text-right mr-3">
+                <div class="row">Available</div>
+                <div class="row">{{ product['ItemAvailability'] }}</div>
+            </div>
         </div>
-        <div class="row mt-2">
-            <div class="col-4"></div>
-            <div class="col-1 text-right mr-3">{{ product['ItemPrice'] }} zł</div>
-            <div class="col-1 text-right mr-3">{{ product['ItemUnit'] }}</div>
-            <div class="col-1 text-right mr-3">{{ product['ItemAvailability'] }}</div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-4 ml-3">{{ product['ItemDescr'] }}</div>
-        </div>
-        {% if current_user.is_authenticated and current_user.usertype == 'customer' %}
-            <div class="text-right mr-3">
-                {% if already_in_cart %}
-                    <button type="button" class="btn btn-outline-success" disabled>Already in cart</button>
-                {% else: %}
-                    <form action="{{ url_for('store.add_to_cart', item_id=product['ItemId']) }}"
-                          method="post">
-                        <div class="row">
-                            <div class="col">
+        <div class="row mt-2 ml-3">
+            <div class="col-6">{{ product['ItemDescr'] }}</div>
+            {% if current_user.is_authenticated and current_user.usertype == 'customer' %}
+                <div class="mr-3 col">
+                    {% if already_in_cart %}
+                        <div class="text-right">
+                            <button type="button" class="btn btn-outline-success" disabled>Already in cart
+                            </button>
+                        </div>
+                    {% else: %}
+                        <form action="{{ url_for('store.add_to_cart', item_id=product['ItemId']) }}"
+                              method="post">
+                            <div class="row">
+                                <div class="col-7"></div>
                                 <input type="number" name="quantity" min="1"
                                        max="{{ product['ItemAvailability'] }}"
-                                       value="1"
-                                       onkeydown="return false"></div>
-                            <div class="col">
-                                <button type="submit" class="btn btn-success col">Add to cart</button>
+                                       value="1" class="col-2">
+                                <div class="text-left col-3">
+                                    <button type="submit" class="btn btn-success">Add to cart</button>
+                                </div>
                             </div>
+                        </form>
                         </div>
-                    </form>
-                {% endif %}
-            </div>
-        {% endif %}
+                    {% endif %}
+                </div>
+            {% endif %}
     </div>
 {% endblock %}
