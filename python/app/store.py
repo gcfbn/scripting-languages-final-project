@@ -158,7 +158,8 @@ def delete_item():
 def profile():
     if current_user.usertype == 'seller':
         products = get_seller_report(current_user.id)
-        return render_template('seller_profile.html', products=products, name=current_user.name)
+        total = sum(i['PurchasedItemPrice'] * i['PurchasedItemsQuantity'] for i in products)
+        return render_template('seller_profile.html', products=products, name=current_user.name, total=total)
     elif current_user.usertype == 'customer':
         products = get_purchased_items(current_user.id)
         groups = groupby(products, projection=lambda p: p['PurchaseDate'])

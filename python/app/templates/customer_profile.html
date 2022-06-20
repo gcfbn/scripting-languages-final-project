@@ -11,16 +11,15 @@
             <tr>
                 <th style="text-align:left;">Product Name</th>
                 <th style="text-align:right;" width="10%">Unit Price</th>
-                <th style="text-align:right;" width="5%">Quantity</th>
-                <th style="text-align:left;" width="5%">Unit</th>
+                <th style="text-align:right;" width="10%">Quantity</th>
                 <th style="text-align:right;" width="10%">Total</th>
             </tr>
             {% for product in products %}
                 <tr>
                     <th style="text-align:left;">{{ product['ItemName'] }}</th>
                     <th style="text-align:right;" width="10%">{{ product['PurchasedItemPrice'] }} zł</th>
-                    <th style="text-align:right;" width="5%">{{ product['PurchasedItemsQuantity'] }}</th>
-                    <th style="text-align:left;" width="5%">{{ product['ItemUnit'] }}</th>
+                    <th style="text-align:right;"
+                        width="5%">{{ product['PurchasedItemsQuantity'] }} {{ product['ItemUnit'] }}</th>
                     <th style="text-align:right;"
                         width="5%">{{ product['PurchasedItemPrice'] * product['PurchasedItemsQuantity'] }} zł
                     </th>
