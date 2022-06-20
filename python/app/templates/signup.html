@@ -1,30 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-danger">
+                {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+            </div>
+        {% endif %}
+    {% endwith %}
     <div class="column is-4 is-offset-4">
         <h3 class="title ml-3 mt-3">Sign Up</h3>
         <div class="box">
-            <form method="POST" action="/signup">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        <div class="alert alert-danger">
-                            {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
-                        </div>
-                    {% endif %}
-                {% endwith %}
+            <form method="POST" action="/signup" onsubmit="return validateForm()">
                 <div class="form-outline mb-1 ml-3 mt-2">
                     <input class="input" id="form2Example1" type="email" name="email" placeholder="Your Email"
-                           autofocus="">
+                           autofocus="" pattern=".{5,127}" required="required">
                 </div>
 
                 <div class="form-outline mb-1 ml-3">
                     <input class="input" id="form2Example1" type="text" name="name"
-                           placeholder="Your Name" autofocus="">
+                           placeholder="Your Name" autofocus="" pattern=".{5,127}" required="required">
                 </div>
 
                 <div class="form-outline mb-1 ml-3">
                     <input class="input" id="form2Example1" type="password" name="password"
-                           placeholder="Your Password" autofocus="">
+                           placeholder="Your Password" autofocus="" pattern=".{8,127}" required="required">
                 </div>
 
                 <div class="row" style="margin: auto">
