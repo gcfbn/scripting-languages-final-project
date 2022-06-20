@@ -32,8 +32,8 @@ def get_user_purchases(user_id):
     return cursor.fetchall()
 
 
-def get_purchased_items(purchase_id):
-    cursor.execute(get_purchased_items_query, (purchase_id,))
+def get_purchased_items(user_id):
+    cursor.execute(get_purchased_items_query, (user_id,))
     return cursor.fetchall()
 
 
