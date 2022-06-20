@@ -2,23 +2,23 @@
 
 {% block content %}
     <div id="item-list">
-        <h3 class="mb-3">Products</h3>
+        <h2 class="ml-3 mt-2 mb-2">Products</h2>
         {% if products %}
-            <table class="tbl-list" cellpadding="10" cellspacing="1">
-                <tbody>
-                <tr>
+            <table class="table table-striped" cellpadding="10" cellspacing="1">
+                <thead>
+                <tr style="font-size: 1.5rem" class="table-dark">
                     <th style="text-align:left;">Name</th>
-                    <th style="text-align:left;" width="40%">Description</th>
                     <th style="text-align:right;" width="10%">Unit Price</th>
                     <th style="text-align:right;" width="10%">Unit</th>
                     <th style="text-align:right;" width="5%">Availability</th>
                 </tr>
+                </thead>
+                <tbody>
                 {% for product in products %}
                     <tr>
                         <td style="text-align:left;"><a
                                 href="{{ url_for('store.item', item_id=product['ItemId']) }}">{{ product['ItemName'] }}</a>
                         </td>
-                        <td style="text-align:left;">{{ product['ItemDescr'] }}</td>
                         <td style="text-align:right;">{{ product['ItemPrice'] }} zł</td>
                         <td style="text-align:right;">{{ product['ItemUnit'] }}</td>
                         <td style="text-align:right;">{{ product['ItemAvailability'] }}</td>
