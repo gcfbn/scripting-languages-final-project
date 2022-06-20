@@ -12,41 +12,45 @@
     </div>
 
     <div id="shopping-cart">
-        <h3 class="mb-3">Your Cart</h3>
+        <h3 class="mb-3 mt-2 ml-2">Your Cart</h3>
         {% if products %}
-            <table class="tbl-cart" cellpadding="10" cellspacing="1">
-                <tbody>
+            <table class="table table-striped" cellpadding="10" cellspacing="1">
+                <thead style="font-size: 1.5rem">
                 <tr>
-                    <th style="text-align:left;">Name</th>
-                    <th style="text-align:right;" width="5%">Quantity</th>
-                    <th style="text-align:right;" width="10%">Unit Price</th>
-                    <th style="text-align:right;" width="10%">Unit</th>
-                    <th style="text-align:right;" width="10%">Price</th>
-                    <th style="text-align:center;" width="5%">Remove</th>
+                    <th style="text-align:left;" scope="col">Name</th>
+                    <th style="text-align:right;" width="10%" scope="col">Unit Price</th>
+                    <th style="text-align:right;" width="10%" scope="col">Unit</th>
+                    <th style="text-align:right;" width="10%" scope="col">Price</th>
+                    <th style="text-align:center;" width="20%" scope="col">Quantity</th>
+                    <th style="text-align:center;" width="5%" scope="col">Remove</th>
                 </tr>
+                </thead>
+                <tbody>
                 {% for product in products %}
                     <tr>
                         <td style="text-align:left;"><a
                                 href="{{ url_for('store.item', item_id=product['ItemId']) }}">{{ product['ItemName'] }}</a>
                         </td>
-                        <td style="text-align:right;">
-                            <form action="{{ url_for('store.change_cart_quantity', item_id=product['ItemId']) }}"
-                                  method="post">
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="number" name="quantity" min="1"
-                                               max="{{ product['ItemAvailability'] }}"
-                                               value="{{ product['CartItemQuantity'] }}"
-                                               onkeydown="return false"></div>
-                                    <div class="col">
-                                        <button type="submit" class="btn btn-dark col">Change</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </td>
                         <td style="text-align:right;">{{ product['ItemPrice'] }} zł</td>
                         <td style="text-align:right;">{{ product['ItemUnit'] }}</td>
                         <td style="text-align:right;">{{ product['ItemPrice'] * product['CartItemQuantity'] }} zł</td>
+                        <td style="text-align:right;">
+                            <div class="quantity-form">
+                                <form action="{{ url_for('store.change_cart_quantity', item_id=product['ItemId']) }}"
+                                      method="post">
+                                    <div class="row">
+                                        <div class="col-3"></div>
+                                        <input type="number" name="quantity" min="1"
+                                               max="{{ product['ItemAvailability'] }}"
+                                               value="{{ product['CartItemQuantity'] }}"
+                                               onkeydown="return false" class="col-3">
+                                        <div class="col-6 text-left">
+                                            <button type="submit" class="btn btn-dark col">Change</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </td>
                         <td style="text-align:center;">
                             <a href="{{ url_for('store.remove_from_cart', item_id=product['ItemId']) }}"
                                class="btnRemoveAction">
@@ -56,16 +60,15 @@
                     </tr>
                 {% endfor %}
                 <tr>
-                    <td colspan="2" align="right"><strong>Total:</strong></td>
-                    <td align="right"><strong>{{ total_items }}</strong></td>
-                    <td align="right" colspan="2"><strong>{{ total_price }} zł</strong></td>
+                    <td colspan="4" align="right"><strong>Total:</strong></td>
+                    <td align="right"><strong>{{ total_price }} zł</strong></td>
                     <td></td>
                 </tr>
                 </tbody>
             </table>
-            <div class="text-right mb-2">
+            <div class="text-right mt-2">
                 <a href="{{ url_for('store.buy') }}"
-                   class="btn btn-primary mr-3" role="button"><strong>Buy</strong></a>
+                   class="btn btn-primary mr-3" role="button"><strong>Order</strong></a>
             </div>
         {% else: %}
             <div class="no-records">Your Cart is Empty</div>
