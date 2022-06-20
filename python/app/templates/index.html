@@ -1,10 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Flask Login Example
-</h1>
-<h2 class="subtitle">
-  Easy authentication and authorization in Flask.
-</h2>
+    <div class="hero-container">
+        <div class="text-center">
+            <h1 class="display-5 fw-bold">Webstore</h1>
+            <p class="lead mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula nunc a
+                justo auctor condimentum. Nunc in imperdiet sem. Nulla volutpat ultrices ex eu tempus. </p>
+            {% if not current_user.is_authenticated %}
+            <div class="d-grip gap-2 d-sm-flex justify-content-sm-center">
+                <a class="btn btn-primary btn-lg px-4 gap-3 mr-1" role="button" href="{{ url_for('auth.login') }}">Log in</a>
+                <a class="btn btn-outline-secondary btn-lg px-4 ml-1" role="button" href="{{ url_for('auth.signup') }}">Sign
+                    up</a>
+            </div>
+            {% endif %}
+            <a class="btn btn-primary btn-lg px-4 mt-2" role="button" href="{{ url_for('store.items') }}">Explore
+                products</a>
+        </div>
+    </div>
 {% endblock %}

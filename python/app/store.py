@@ -163,4 +163,4 @@ def profile():
         products = get_purchased_items(current_user.id)
         groups = groupby(products, projection=lambda p: p['PurchaseDate'])
         return render_template('customer_profile.html', groups=groups, name=current_user.name)
-    return render_template('profile.html')
+    return redirect(url_for('main.index'))
