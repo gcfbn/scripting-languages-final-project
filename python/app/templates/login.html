@@ -1,31 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h3 class="title">Login</h3>
-        <form method="POST" action="/login">
+    <h3 class="title ml-3 mt-3">Login</h3>
+    <form method="POST" action="/login">
         <div class="box">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        <div class="alert alert-danger">
-                            {{ messages[0] }}
-                        </div>
-                    {% endif %}
-                {% endwith %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert alert-danger">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
 
-                <div class="form-outline mb-1">
-                    <input class="input" id="form2Example1" type="email" name="email" placeholder="Your Email"
-                           autofocus="">
+            <div class="form-outline mb-1 ml-3 mt-2">
+                <input class="input" id="form2Example1" type="email" name="email" placeholder="Your Email"
+                       autofocus="">
+            </div>
+
+            <div class="form-outline ml-3 mb-1">
+                <input class="input" id="form2Example1" type="password" name="password"
+                       placeholder="Your Password" autofocus="">
+            </div>
+
+            <div class="form-submit">
+                <div class="row ml-2">
+                    <label class="checkbox md-2"><input type="checkbox" name="remember">Remember me</label>
                 </div>
-
-                <div class="form-outline mb-1">
-                    <input class="input" id="form2Example1" type="password" name="password"
-                           placeholder="Your Password" autofocus="">
-                </div>
-
-                <div class="form-submit">
-                    <label class="checkbox col-md-2"><input type="checkbox" name="remember">Remember me</label>
-                    <button class="btn-primary col-md-1">Login</button>
+                <div class="row ml-2 text-center">
+                    <button class="btn-primary col-2 md-1">Login</button>
                 </div>
             </div>
-        </form>
+        </div>
+    </form>
 {% endblock %}

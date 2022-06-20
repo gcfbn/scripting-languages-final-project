@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="column is-4 is-offset-4">
-        <h3 class="title">Sign Up</h3>
+        <h3 class="title ml-3 mt-3">Sign Up</h3>
         <div class="box">
             <form method="POST" action="/signup">
                 {% with messages = get_flashed_messages() %}
@@ -12,36 +12,42 @@
                         </div>
                     {% endif %}
                 {% endwith %}
-                <div class="form-outline mb-1">
+                <div class="form-outline mb-1 ml-3 mt-2">
                     <input class="input" id="form2Example1" type="email" name="email" placeholder="Your Email"
                            autofocus="">
                 </div>
 
-                <div class="form-outline mb-1">
+                <div class="form-outline mb-1 ml-3">
                     <input class="input" id="form2Example1" type="text" name="name"
                            placeholder="Your Name" autofocus="">
                 </div>
 
-                <div class="form-outline mb-1">
+                <div class="form-outline mb-1 ml-3">
                     <input class="input" id="form2Example1" type="password" name="password"
                            placeholder="Your Password" autofocus="">
                 </div>
 
-            <div class="row" style="margin: auto">
-                <div class="form-check col-md-1">
-                    <input class="form-check-input" type="radio" name="usertypeRadio" id="usertypeRadio1" value="seller">
-                    <label class="form-check-label" for="flexRadio1">Seller</label>
-                </div>
+                <div class="row" style="margin: auto">
+                    <div class="form-check col-md-1 ml-3">
+                        <input class="form-check-input" type="radio" name="usertypeRadio" id="usertypeRadio1"
+                               value="seller">
+                        <label class="form-check-label" for="flexRadio1">Seller</label>
+                    </div>
 
-                <div class="form-check col-md-1">
-                    <input class="form-check-input" type="radio" name="usertypeRadio" id="usertypeRadio2" value="customer" checked>
-                    <label class="form-check-label" for="flexRadio2">Customer</label>
+                    <div class="form-check col-md-1 ml-3">
+                        <input class="form-check-input" type="radio" name="usertypeRadio" id="usertypeRadio2"
+                               value="customer" checked>
+                        <label class="form-check-label" for="flexRadio2">Customer</label>
+                    </div>
                 </div>
-            </div>
 
                 <div class="form-submit">
-                    <label class="checkbox col-md-2"><input type="checkbox" name="remember">Remember me</label>
-                    <button class="btn-primary col-md-1">Sign up</button>
+                    <div class="row ml-3">
+                        <label class="checkbox col-2"><input type="checkbox" name="remember">Remember me</label>
+                    </div>
+                    <div class="row ml-3">
+                        <button class="btn-primary col-2">Sign up</button>
+                    </div>
                 </div>
             </form>
         </div>
