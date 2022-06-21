@@ -4,11 +4,16 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
-# init SQLAlchemy so we can use it later in our models
+# init SQLAlchemy so it can be used later in other modules
 db = SQLAlchemy()
 
 
 def create_app():
+    """
+    Create and configure an instance of the Flask application. Function configures connection to the
+    database containing the user data and the login system.
+    :return: Flask application
+    """
     app = Flask(__name__)
 
     basedir = os.path.abspath(os.path.dirname(__file__))
@@ -26,6 +31,7 @@ def create_app():
         from .models import User
         return User.query.get(int(user_id))
 
+    # import blueprints from other modules
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 

@@ -4,6 +4,10 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
+    """
+    Render the main (index) page.
+    :return: HTML page
+    """
     return render_template('index.html')
 
 
